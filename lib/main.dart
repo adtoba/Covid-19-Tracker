@@ -1,7 +1,12 @@
 import 'package:covid19/bloc/services/locator.dart';
+import 'package:covid19/bloc/viewmodels/faqs.dart';
+import 'package:covid19/bloc/viewmodels/news.dart';
 import 'package:covid19/bloc/viewmodels/stats.dart';
-import 'package:covid19/screens/home.dart';
-import 'package:covid19/screens/welcome.dart';
+import 'package:covid19/res/size_config.dart';
+import 'package:covid19/screens/splash.dart';
+import 'package:covid19/screens/tabs.dart';
+import 'package:covid19/screens/pageview.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,8 +20,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-       ChangeNotifierProvider(create: (context) => StatsViewModel()),
+      providers: <ChangeNotifierProvider<ChangeNotifier>>[
+       ChangeNotifierProvider<StatsViewModel>(create: (BuildContext context) => StatsViewModel()),
+       ChangeNotifierProvider<NewsViewModel>(create: (BuildContext context) => NewsViewModel()),
+       ChangeNotifierProvider<FaqsViewModel>(create: (BuildContext context) => FaqsViewModel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -25,7 +32,12 @@ class MyApp extends StatelessWidget {
           fontFamily: 'MuseoSans',
           primarySwatch: Colors.blue,
         ),
-        home: SplashScreen(),
+        home: Builder(
+          builder: (BuildContext context) {
+            SizeConfig.init(context, width: 360, height: 640, allowFontScaling: true);
+            return const HomePageView();
+          }
+        )
       ),
     );
   }

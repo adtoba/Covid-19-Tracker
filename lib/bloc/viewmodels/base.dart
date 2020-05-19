@@ -1,17 +1,18 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
 
-enum ViewStatus {
-  Loading,
-  Ready
+enum OperationStatus {
+  LOADING,
+  SUCCESSFUL,
+  FAILED
 }
 
 class BaseViewModel extends ChangeNotifier {
-  ViewStatus _status;
+  OperationStatus _status;
 
-  ViewStatus get viewStatus => _status;
+  OperationStatus get viewStatus => _status;
 
-  void setStatus(ViewStatus status) {
+  void setStatus(OperationStatus status) {
     _status = status;
     notifyListeners();
   }
